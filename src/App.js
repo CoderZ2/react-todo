@@ -29,6 +29,18 @@ const App = () => {
         }))
     }
 
+    const handleClearCompleted = () => {
+        setState(prev => prev.filter(todo => !todo.completed))
+    }
+
+    const handleToggleChecked = () => {
+        const checked = state.find(todo => todo.completed === false) ? true : false;
+        setState(prev => prev.map((todo) => {
+            todo.completed = checked
+            return todo;
+        }))
+    }
+
     return (
         <div className='container flex justify-center'>
             <div className="max-w-sm mt-5 w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -86,13 +98,13 @@ const App = () => {
                     {state.filter(todo => todo.completed === false).length} left
                 </div>
                 <div className='-mx-1 flex mt-2'>
-                    <button type="button"
+                    <button type="button" onClick={handleToggleChecked}
                         className="py-2.5 flex-1 mx-1 px-5 text-sm font-medium text-gray-900 focus:outline-none  bg-white rounded-lg border focus:ring-blue-500 hover:text-blue-700 focus:z-10 focus:border-blue-500 focus:ring-0 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                        Check All
+                        {!state.length || state.find(todo => todo.completed == false) ? 'Check All' : 'Unchecked All'}
                     </button>
-                    <button type="button"
+                    <button type="button" onClick={handleClearCompleted}
                         className="py-2.5 flex-1 mx-1 px-5 text-sm font-medium text-gray-900 focus:outline-none  bg-white rounded-lg border focus:ring-blue-500 hover:text-blue-700 focus:z-10 focus:border-blue-500 focus:ring-0 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                        Inchecked All
+                        Clear Completed
                     </button>
                 </div>
             </div>
